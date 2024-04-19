@@ -16,6 +16,6 @@ variable "vpc_cidr" {
 variable "common_tags" {
   type = object({
     ClusterName : string,
-    Terraform : string,
+    cost-enter : string,
   })
 }
