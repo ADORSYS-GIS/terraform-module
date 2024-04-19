@@ -1,0 +1,5 @@
+replicas: 2
+podDisruptionBudget:
+  maxUnavailable: 1
+metrics:
+  enabled: true

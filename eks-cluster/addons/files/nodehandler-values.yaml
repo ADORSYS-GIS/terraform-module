@@ -1,0 +1,5 @@
+replicas: 1
+enablePrometheusServer: false
+prometheusServerPort: 9092
+podDisruptionBudget: {}
+#  maxUnavailable: 1
