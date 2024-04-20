@@ -72,3 +72,9 @@ variable "sso_role_name" {
     "admins" = "AWSReservedSSO_AdministratorAccess"
   }
 }
+
+variable "enable_creator_admin_permissions" {
+  description = "Enable cluster creator admin permissions"
+  type        = bool
+  default     = false
+}

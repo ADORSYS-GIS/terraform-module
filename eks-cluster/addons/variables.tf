@@ -19,4 +19,9 @@ variable "oidc_provider_arn" {
   type        = string
 }
 
-variable "common_tags" {}
+variable "common_tags" {
+  type = object({
+    ClusterName : string,
+    cost-enter : string,
+  })
+}

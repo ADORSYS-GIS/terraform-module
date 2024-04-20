@@ -44,7 +44,7 @@ module "eks" {
     }
   }
 
-  enable_cluster_creator_admin_permissions = false
+  enable_cluster_creator_admin_permissions = var.enable_creator_admin_permissions
 
   access_entries = {
     eks-admins = {
