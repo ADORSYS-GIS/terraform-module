@@ -1,3 +1,3 @@
 # Terraform for AWS Solutions Project
 
-![mock aws](https://github.com)
+![mock aws](.assets/AWS-mock.png)
