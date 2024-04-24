@@ -14,8 +14,8 @@ module "alb" {
   version = "~> 9.0"
 
   name    = "${local.project}-alb"
-  vpc_id  = module.vpc.vpc_id
-  subnets = module.vpc.public_subnets
+  vpc_id  = var.vpc_id
+  subnets = var.subnets
 
   security_group_name = "alb-sg"
   # Security Group
@@ -40,7 +40,7 @@ module "alb" {
   security_group_egress_rules = {
     all = {
       ip_protocol = "-1"
-      cidr_ipv4   = module.vpc.vpc_cidr_block
+      cidr_ipv4   = var.cidr_ipv4
     }
   }
 
@@ -57,7 +57,7 @@ module "alb" {
     https = {
       port            = 443
       protocol        = "HTTPS"
-      certificate_arn = module.acm.acm_certificate_arn
+      certificate_arn = var.certificate_arn
 
       forward = {
         target_group_key = "sol-instance"

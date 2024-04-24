@@ -20,8 +20,8 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "~> 4.0"
 
-  domain_name = locals.domain_name
-  zone_id     = locals.zone_id
+  domain_name = local.domain_name
+  zone_id     = local.zone_id
 
   validation_method = "DNS"
 

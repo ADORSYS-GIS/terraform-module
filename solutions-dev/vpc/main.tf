@@ -1,7 +1,3 @@
-provider "aws" {
-  region = local.region
-}
-
 data "aws_availability_zones" "available" {}
 
 locals {
@@ -13,17 +9,14 @@ locals {
 
   tags = {
     Terraform   = true,
-    Environment = dev,
+    Environment = "dev",
     cost-center = ""
   }
 }
 
-################################################################################
-# VPC Module
-################################################################################
-
 module "vpc" {
-  source = "../.."
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~> 5.0"
 
   name = local.name
   cidr = local.vpc_cidr
@@ -33,12 +26,16 @@ module "vpc" {
   public_subnets  = [for k, v in local.azs : cidrsubnet(local.vpc_cidr, 8, k + 4)]
 
   enable_nat_gateway = true
+  single_nat_gateway = true
 
   enable_ipv6                                   = true
   public_subnet_assign_ipv6_address_on_creation = true
 
   private_subnet_ipv6_prefixes = [0, 1, 2]
   public_subnet_ipv6_prefixes  = [3, 4, 5]
+
+  enable_dns_support   = true
+  enable_dns_hostnames = true
 
   tags = local.tags
 }

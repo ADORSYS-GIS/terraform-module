@@ -4,10 +4,13 @@ locals {
   ami_id = data.aws_ami.ubuntu.id
   # 4 vCPU's 16 GB Ram x86_64
   instance_type           = "m6a.xlarge"
-  vpc_security_groups_ids = [module.ec2_security_group.security_group_id]
-  subnet_id               = element(module.vpc.private_subnets, 0)
+  vpc_security_group_ids = [module.ec2_security_group.security_group_id]
+  subnet_id               = var.subnet_id
   volume_size             = 100
 
+# TODO: 
+# check if docker-compose is actually running
+# init git 
   user_data = <<-EOT
     #!/bin/bash
     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -54,7 +57,7 @@ module "ec2_instance" {
       encrypted   = true
       volume_type = "gp3"
       throughput  = 200
-      volume_size = local.volsize
+      volume_size = local.volume_size
       tags = {
         Name = "${local.project}-ec2root-block"
       }
@@ -66,12 +69,17 @@ module "ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 4.0"
 
-  name        = local.name
-  description = "Security group http-80-tcp for 10.0.0.0/16 for EC2 instance"
-  vpc_id      = module.vpc.vpc_id
+  name        = "sg-${local.project}"
+  description = "Security group http-80-tcp for EC2 instance"
+  vpc_id      = var.vpc_id
 
-  ingress_security_groups = ["alb-sg"]
-  ingress_rules           = ["http-80-tcp"]
+  # intended to only allow http traffic from the alb sg
+  ingress_with_source_security_group_id = [
+    {
+      rule                     = "http-80-tcp"
+      source_security_group_id = var.source_security_group_id
+    },
+  ]
   egress_rules            = ["all-all"]
 
   tags = local.tags
@@ -88,6 +96,39 @@ data "aws_ami" "ubuntu" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-
+    # TODO: 
+    # this legit owner?
   owners = ["099720109477"]
 }
+
+# TODO: 
+# - [ ] needed for aws session manager to work ??
+
+#  module "vpc_endpoints" {
+#    source  = "terraform-aws-modules/vpc/aws//modules/vpc-endpoints"
+#    version = "~> 5.0"
+#  
+#    vpc_id = module.vpc.vpc_id
+#  
+#    endpoints = { for service in toset(["ssm", "ssmmessages", "ec2messages"]) :
+#      replace(service, ".", "_") =>
+#      {
+#        service             = service
+#        subnet_ids          = module.vpc.intra_subnets
+#        private_dns_enabled = true
+#        tags                = { Name = "${local.name}-${service}" }
+#      }
+#    }
+#  
+#    create_security_group      = true
+#    security_group_name_prefix = "${local.name}-vpc-endpoints-"
+#    security_group_description = "VPC endpoint security group"
+#    security_group_rules = {
+#      ingress_https = {
+#        description = "HTTPS from subnets"
+#        cidr_blocks = module.vpc.intra_subnets_cidr_blocks
+#      }
+#    }
+#  
+#    tags = local.tags
+#  }
