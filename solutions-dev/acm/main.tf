@@ -33,6 +33,7 @@ module "acm" {
 
   tags = {
     Name = "sol.adorsys.com",
+    cost-center = ""
   }
 }
 

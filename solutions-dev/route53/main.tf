@@ -8,6 +8,12 @@ locals {
   # Check if Zone is already created
   create_zone = data.aws_route53_zone.existing.zone_id ? 1 : 0
 
+  tags = {
+    Terraform   = "true",
+    Environment = "dev",
+    cost-center = ""
+  }
+
 }
 
 data "aws_route53_zone" "existing" {
@@ -24,17 +30,10 @@ module "zones" {
   zones = {
     "sol.adorsys.com" = {
       comment = "dev domain for solutions"
-      tags = {
-        Environment = "dev"
-      }
+      tags = local.tags
     }
   }
-
-  tags = {
-    Terraform   = "true",
-    Environment = "dev",
-    cost-center = ""
-  }
+    tags = local.tags
 }
 
  module "records" {
@@ -54,5 +53,7 @@ module "zones" {
 #     }
 #   ]
  
+   tags = local.tags
+
    depends_on = [module.zones]
  }

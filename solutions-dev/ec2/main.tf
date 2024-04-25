@@ -63,6 +63,8 @@ module "ec2_instance" {
       }
     },
   ]
+
+  tags = local.tags
 }
 
 module "ec2_security_group" {
