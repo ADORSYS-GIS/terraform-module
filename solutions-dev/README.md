@@ -1,17 +1,11 @@
 # Terraform for AWS Solutions Project
 
 ToDo: 
-- [ ] r53 outputs errors
-- [ ] SecGroups check
-- [ ] r53 routes to alb alias
 - [ ] setup different environments
     - new ec2 machine per environment?
     - another docker network and domain for other environment on same ec2?
 - [ ] access mgmt? 
-    - create aws user and access keys for developer?
-    - start/stop instance with lambda?
-    - ssh?
-    - script?
+    - start/stop instance with pipeline in gitlab?
 
     - Usecase: 
         - Developer wants to test his code in a shared environment
