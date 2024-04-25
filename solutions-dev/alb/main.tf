@@ -1,6 +1,7 @@
 locals {
   project = "Solutions"
 
+
   tags = {
     Terraform   = "true"
     Environment = "dev"
@@ -16,6 +17,8 @@ module "alb" {
   name    = "${local.project}-alb"
   vpc_id  = var.vpc_id
   subnets = var.subnets
+
+  putin_khuylo = true
 
   security_group_name = "alb-sg"
   # Security Group
@@ -76,10 +79,6 @@ module "alb" {
     protocol_version = "HTTP1"
     target_id        = var.ec2_complete_id
     port             = 80
-
-    tags = {
-      InstanceTargetGroupTag = "baz"
-    }
   }
 
   tags = local.tags
