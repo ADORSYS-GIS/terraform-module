@@ -8,6 +8,9 @@ locals {
   # Check if Zone is already created
   create_zone = data.aws_route53_zone.existing.zone_id ? 1 : 0
 
+  # Existing Zone ID
+  zone_id = data.aws_route53_zone.existing.zone_id
+
   tags = {
     Terraform   = "true",
     Environment = "dev",
@@ -33,7 +36,6 @@ module "zones" {
       tags = local.tags
     }
   }
-    tags = local.tags
 }
 
  module "records" {
@@ -48,12 +50,10 @@ module "zones" {
        type    = "A"
        alias   = {
          name    = var.alb_dns_name
-         zone_id = module.zones.route53_zone_zone_id
+         zone_id = local.zone_id
        }
      }
    ]
- 
-   tags = local.tags
 
    depends_on = [module.zones]
  }
