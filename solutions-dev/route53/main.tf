@@ -42,16 +42,16 @@ module "zones" {
  
    zone_name = keys(module.zones.route53_zone_zone_id)[0]
  
-#   records = [
-#     {
-#       name    = "testname"
-#       type    = "A"
-#       alias   = {
-#         name    = "d-10qxlbvagl.execute-api.eu-west-1.amazonaws.com"
-#         zone_id = "ZLY8HYME6SFAD"
-#       }
-#     }
-#   ]
+   records = [
+     {
+       name    = "*.sol.adorsys.com"
+       type    = "A"
+       alias   = {
+         name    = var.alb_dns_name
+         zone_id = module.zones.route53_zone_zone_id
+       }
+     }
+   ]
  
    tags = local.tags
 

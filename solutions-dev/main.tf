@@ -7,6 +7,7 @@ module "vpc" {
 
 module "route53" {
   source = "./route53"
+  alb_dns_name = module.alb.dns_name
 }
 
 module "acm" {
