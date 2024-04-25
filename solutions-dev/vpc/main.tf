@@ -28,11 +28,11 @@ module "vpc" {
   enable_nat_gateway = true
   single_nat_gateway = true
 
-  enable_ipv6                                   = true
-  public_subnet_assign_ipv6_address_on_creation = true
+  # enable_ipv6                                   = true
+  # public_subnet_assign_ipv6_address_on_creation = true
 
-  private_subnet_ipv6_prefixes = [0, 1, 2]
-  public_subnet_ipv6_prefixes  = [3, 4, 5]
+  # private_subnet_ipv6_prefixes = [0, 1, 2]
+  # public_subnet_ipv6_prefixes  = [3, 4, 5]
 
   enable_dns_support   = true
   enable_dns_hostnames = true

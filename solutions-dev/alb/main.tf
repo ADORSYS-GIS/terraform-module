@@ -26,7 +26,7 @@ module "alb" {
       ip_protocol      = "tcp"
       description      = "HTTP web traffic"
       cidr_ipv4        = "0.0.0.0/0"
-      ipv6_cidr_blocks = ["::/0"]
+      #ipv6_cidr_blocks = ["::/0"]
     }
     all_https = {
       from_port        = 443
@@ -34,7 +34,7 @@ module "alb" {
       ip_protocol      = "tcp"
       description      = "HTTPS web traffic"
       cidr_ipv4        = "0.0.0.0/0"
-      ipv6_cidr_blocks = ["::/0"]
+      #ipv6_cidr_blocks = ["::/0"]
     }
   }
   security_group_egress_rules = {
