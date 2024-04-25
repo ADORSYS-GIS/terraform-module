@@ -27,6 +27,7 @@ module "ec2" {
 module "alb" {
   source          = "./alb"
   vpc_id          = module.vpc.vpc_id
+  ec2_complete_id = module.ec2.ec2_complete_id
   cidr_ipv4       = module.vpc.vpc_cidr_block
   subnets         = module.vpc.public_subnets
   certificate_arn = module.acm.acm_certificate_arn

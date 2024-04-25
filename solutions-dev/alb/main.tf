@@ -72,6 +72,14 @@ module "alb" {
       port        = 80
       target_type = "instance"
     }
+
+    protocol_version = "HTTP1"
+    target_id        = var.ec2_complete_id
+    port             = 80
+
+    tags = {
+      InstanceTargetGroupTag = "baz"
+    }
   }
 
   tags = local.tags

@@ -16,3 +16,8 @@ variable "certificate_arn" {
   description = "placeholder"
   type        = any
 }
+
+variable "ec2_complete_id" {
+  description = "placeholder"
+  type        = any
+}
