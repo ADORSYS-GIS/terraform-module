@@ -42,7 +42,7 @@ data "aws_route53_zone" "existing" {
    source  = "terraform-aws-modules/route53/aws//modules/records"
    version = "~> 2.0"
  
-   zone_name = keys(local.zone_id)[0]
+   zone_name = local.domain_name
  
    records = [
      {

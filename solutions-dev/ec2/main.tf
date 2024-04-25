@@ -69,7 +69,7 @@ module "ec2_security_group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "~> 4.0"
 
-  name        = "sg-${local.project}"
+  name        = "sol-${local.project}"
   description = "Security group http-80-tcp for EC2 instance"
   vpc_id      = var.vpc_id
 
