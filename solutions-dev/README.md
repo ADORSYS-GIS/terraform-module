@@ -1,5 +1,6 @@
 # Terraform for AWS Solutions Project
 
+
 ToDo: 
 - [ ] setup different environments
     - new ec2 machine per environment?
