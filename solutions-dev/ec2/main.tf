@@ -12,15 +12,15 @@ locals {
     #!/bin/bash
     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
+
     sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     sudo apt install unzip -y
     sudo unzip awscliv2.zip
     sudo ./aws/install
     
-    username="pull-token"
-    token=$(aws ssm get-parameter --name git-pull-token)
+    export token=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text)
     
-    git clone https://$username:$token@git.adorsys.de/solutions/docker-develop
+    git clone https://username:$token@git.adorsys.de/solutions/docker-develop
     cd docker-develop/develop/xs2a
     sudo docker-compose up -d
   EOT
