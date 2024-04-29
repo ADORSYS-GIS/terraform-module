@@ -8,13 +8,21 @@ locals {
   subnet_id               = var.subnet_id
   volume_size             = 100
 
-# TODO: 
-# check if docker-compose is actually running
-# init git 
   user_data = <<-EOT
     #!/bin/bash
     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
+    sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    sudo apt install unzip -y
+    sudo unzip awscliv2.zip
+    sudo ./aws/install
+    
+    username="pull-token"
+    token=$(aws ssm get-parameter --name git-pull-token)
+    
+    git clone https://$username:$token@git.adorsys.de/solutions/docker-develop
+    cd docker-develop/develop/xs2a
+    sudo docker-compose up -d
   EOT
 
   tags = {
@@ -73,7 +81,6 @@ module "ec2_security_group" {
   description = "Security group http-80-tcp for EC2 instance"
   vpc_id      = var.vpc_id
 
-  # intended to only allow http traffic from the alb sg
   ingress_with_source_security_group_id = [
     {
       rule                     = "http-80-tcp"
@@ -96,39 +103,6 @@ data "aws_ami" "ubuntu" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-    # TODO: 
-    # this legit owner?
   owners = ["099720109477"]
 }
 
-# TODO: 
-# - [ ] needed for aws session manager to work ??
-
-#  module "vpc_endpoints" {
-#    source  = "terraform-aws-modules/vpc/aws//modules/vpc-endpoints"
-#    version = "~> 5.0"
-#  
-#    vpc_id = module.vpc.vpc_id
-#  
-#    endpoints = { for service in toset(["ssm", "ssmmessages", "ec2messages"]) :
-#      replace(service, ".", "_") =>
-#      {
-#        service             = service
-#        subnet_ids          = module.vpc.intra_subnets
-#        private_dns_enabled = true
-#        tags                = { Name = "${local.name}-${service}" }
-#      }
-#    }
-#  
-#    create_security_group      = true
-#    security_group_name_prefix = "${local.name}-vpc-endpoints-"
-#    security_group_description = "VPC endpoint security group"
-#    security_group_rules = {
-#      ingress_https = {
-#        description = "HTTPS from subnets"
-#        cidr_blocks = module.vpc.intra_subnets_cidr_blocks
-#      }
-#    }
-#  
-#    tags = local.tags
-#  }
