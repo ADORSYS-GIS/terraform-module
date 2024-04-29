@@ -12,7 +12,7 @@ module "ssm" {
   version = "~> 1.0"
 
   name        = "git-pull-token"
-  value       = var.git-pull-token
+  value       = var.value
   secure_type = true
 
   tags = local.tags
