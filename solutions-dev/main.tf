@@ -2,7 +2,7 @@
 
 module "ssm" {
   source = "./ssm"
-  value = var.git-pull-token
+  git-pull-token = var.git-pull-token
 }
 
 
