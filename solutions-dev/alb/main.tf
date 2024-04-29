@@ -12,7 +12,8 @@ locals {
 
 module "alb" {
   source  = "terraform-aws-modules/alb/aws"
-  version = "~> 9.0"
+  version = "9.7.1"
+  #version = "~> 9"
 
   name    = "${local.project}-alb"
   vpc_id  = var.vpc_id
@@ -48,7 +49,7 @@ module "alb" {
   }
 
   listeners = {
-    http-https-redirect = {
+    http_https_redirect = {
       port     = 80
       protocol = "HTTP"
       redirect = {
@@ -63,22 +64,23 @@ module "alb" {
       certificate_arn = var.certificate_arn
 
       forward = {
-        target_group_key = "sol-instance"
+        target_group_key = "sol_instance"
       }
     }
   }
 
   target_groups = {
-    sol-instance = {
-      name_prefix = "sol-"
+    sol_instance = {
+      name_prefix = "sol"
       protocol    = "HTTP"
       port        = 80
       target_type = "instance"
-    }
+    
+      protocol_version = "HTTP1"
+      target_id        = var.ec2_complete_id
+      port             = 80
 
-    protocol_version = "HTTP1"
-    target_id        = var.ec2_complete_id
-    port             = 80
+  }
   }
 
   tags = local.tags
