@@ -1,5 +1,9 @@
 # Terraform Root
 
+module "ssm" {
+  source = "./ssm"
+}
+
 
 module "vpc" {
   source = "./vpc"
