@@ -46,7 +46,7 @@ data "aws_route53_zone" "existing" {
  
    records = [
      {
-       name    = "*.sol.adorsys.com"
+       name    = "*"
        type    = "A"
        alias   = {
          name    = var.alb_dns_name
