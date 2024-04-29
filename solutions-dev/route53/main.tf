@@ -50,7 +50,7 @@ data "aws_route53_zone" "existing" {
        type    = "A"
        alias   = {
          name    = var.alb_dns_name
-         zone_id = local.zone_id
+         zone_id = var.zone_id
        }
      }
    ]
