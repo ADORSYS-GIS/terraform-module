@@ -7,7 +7,7 @@ locals {
   }
 }
 
-module "secret" {
+module "ssm" {
   source  = "terraform-aws-modules/ssm-parameter/aws"
 
   name        = "git-pull-token"
