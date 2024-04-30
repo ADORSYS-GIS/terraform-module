@@ -10,6 +10,8 @@ locals {
 
   user_data = <<-EOT
     #!/bin/bash
+    sudo snap install docker 
+
     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     sudo chmod +x /usr/local/bin/docker-compose
 
@@ -19,8 +21,10 @@ locals {
     sudo ./aws/install
     
     export token=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text)
-    
-    git clone https://username:$token@git.adorsys.de/solutions/docker-develop
+    git clone https://groupaccesstoken:$token@git.adorsys.de/solutions/docker-develop
+
+    aws ssm get-parameter --name "gitlab-registry-token" --query "Parameter.Value" --with-decryption --output text > /.docker/config.json
+
     cd docker-develop/develop/xs2a
     sudo docker-compose up -d
   EOT

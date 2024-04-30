@@ -1,8 +1,9 @@
 # Terraform Root
 
 module "ssm" {
-  source = "./ssm"
-  git-pull-token = var.git-pull-token
+  source                = "./ssm"
+  git-pull-token        = var.git-pull-token
+  gitlab-registry-token = var.gitlab-registry-token
 }
 
 
@@ -13,7 +14,7 @@ module "vpc" {
 module "route53" {
   source       = "./route53"
   alb_dns_name = module.alb.dns_name
-  alb_zone_id = module.alb.zone_id
+  alb_zone_id  = module.alb.zone_id
 }
 
 module "acm" {
