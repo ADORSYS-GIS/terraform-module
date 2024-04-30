@@ -20,7 +20,7 @@ locals {
     sudo unzip awscliv2.zip
     sudo ./aws/install
 
-    echo "export token=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text) >> $HOME/.bashrc
+    echo "export token=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
     source $HOME/.bashrc
 
     git clone https://groupaccesstoken:$token@git.adorsys.de/solutions/docker-develop
