@@ -27,7 +27,7 @@ locals {
 
     git clone https://groupaccesstoken:$TOKEN@git.adorsys.de/solutions/docker-develop
 
-    echo "$GITLABPW" | docker login gitlab.registry.adorsys.de --username "$GITLABUSER" --password-stdin
+    echo "$GITLABPW" | docker login gitlab-registry.adorsys.de --username "$GITLABUSER" --password-stdin
 
     cd /docker-develop/develop/xs2a
     sudo docker-compose up -d
