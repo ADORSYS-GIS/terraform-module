@@ -19,11 +19,13 @@ locals {
     sudo apt install unzip -y
     sudo unzip awscliv2.zip
     sudo ./aws/install
-    
-    export token=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text)
+
+    echo "export token=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text) >> $HOME/.bashrc
+    source $HOME/.bashrc
+
     git clone https://groupaccesstoken:$token@git.adorsys.de/solutions/docker-develop
 
-    aws ssm get-parameter --name "gitlab-registry-token" --query "Parameter.Value" --with-decryption --output text > /.docker/config.json
+    aws ssm get-parameter --name "gitlab-registry-token" --query "Parameter.Value" --with-decryption --output text > $HOME/.docker/config.json
 
     cd docker-develop/develop/xs2a
     sudo docker-compose up -d
@@ -107,6 +109,8 @@ data "aws_ami" "ubuntu" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
+# TODO: Switch
+# aws ubuntu comes with docker and aws cli 
   owners = ["099720109477"]
 }
 
