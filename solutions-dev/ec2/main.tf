@@ -20,17 +20,16 @@ locals {
     sudo unzip awscliv2.zip
     sudo ./aws/install
 
-    echo "export token=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
+    echo "export TOKEN=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
+    echo "export GITLABUSER=$(aws ssm get-parameter --name "gitlab-registry-user" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
+    echo "export GITLABPW=$(aws ssm get-parameter --name "gitlab-registry-pw" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
     source $HOME/.bashrc
 
-    git clone https://groupaccesstoken:$token@git.adorsys.de/solutions/docker-develop
+    git clone https://groupaccesstoken:$TOKEN@git.adorsys.de/solutions/docker-develop
 
-    export GITLABUSER=$(aws ssm get-parameter --name "gitlab-registry-user" --query "Parameter.Value" --with-decryption --output text)
-    export GITLABPW=$(aws ssm get-parameter --name "gitlab-registry-pw" --query "Parameter.Value" --with-decryption --output text)
-    
     echo "$GITLABPW" | docker login gitlab.registry.adorsys.de --username "$GITLABUSER" --password-stdin
 
-    cd docker-develop/develop/xs2a
+    cd /docker-develop/develop/xs2a
     sudo docker-compose up -d
   EOT
 
