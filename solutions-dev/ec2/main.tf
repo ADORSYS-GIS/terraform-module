@@ -25,7 +25,10 @@ locals {
 
     git clone https://groupaccesstoken:$token@git.adorsys.de/solutions/docker-develop
 
-    aws ssm get-parameter --name "gitlab-registry-token" --query "Parameter.Value" --with-decryption --output text > $HOME/.docker/config.json
+    export GITLABUSER=$(aws ssm get-parameter --name "gitlab-registry-user" --query "Parameter.Value" --with-decryption --output text)
+    export GITLABPW=$(aws ssm get-parameter --name "gitlab-registry-pw" --query "Parameter.Value" --with-decryption --output text)
+    
+    echo "$GITLABPW" | docker login gitlab.registry.adorsys.de --username "$GITLABUSER" --password-stdin
 
     cd docker-develop/develop/xs2a
     sudo docker-compose up -d

@@ -4,8 +4,13 @@ variable "git-pull-token" {
   default     = "def"
 }
 
-variable "gitlab-registry-token" {
+variable "gitlab-registry-user" {
   description = "placeholder"
   type        = any
-  default     = "1234"
+  default     = "rootuser"
+}
+variable "gitlab-registry-pw" {
+  description = "placeholder"
+  type        = any
+  default     = "rootpw"
 }

@@ -3,8 +3,13 @@ variable "git-pull-token" {
   type        = any
   default     = "abcd"
 }
-variable "gitlab-registry-token" {
+variable "gitlab-registry-user" {
   description = "placeholder"
   type        = any
-  default     = "5678"
+  default     = "user123"
+}
+variable "gitlab-registry-pw" {
+  description = "placeholder"
+  type        = any
+  default     = "pw123"
 }

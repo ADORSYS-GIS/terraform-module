@@ -6,14 +6,18 @@ locals {
   }
   parameters = {
     "git-pull-token" = {
-      type        = "SecureString"
-      value       = var.git-pull-token
+      type  = "SecureString"
+      value = var.git-pull-token
     }
-    "gitlab-registry-token" = {
-      type        = "SecureString"
-      value       = var.git-pull-token
+    "gitlab-registry-user" = {
+      type  = "SecureString"
+      value = var.gitlab-registry-user
     }
-}
+    "gitlab-registry-pw" = {
+      type  = "SecureString"
+      value = var.gitlab-registry-pw
+    }
+  }
 }
 
 module "ssm" {
@@ -22,9 +26,9 @@ module "ssm" {
 
   for_each = local.parameters
 
-  name            = try(each.value.name, each.key)
-  value           = try(each.value.value, null)
-  type            = try(each.value.type, null)
+  name  = try(each.value.name, each.key)
+  value = try(each.value.value, null)
+  type  = try(each.value.type, null)
 
   tags = local.tags
 }

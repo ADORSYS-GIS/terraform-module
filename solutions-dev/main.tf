@@ -1,9 +1,10 @@
 # Terraform Root
 
 module "ssm" {
-  source                = "./ssm"
-  git-pull-token        = var.git-pull-token
-  gitlab-registry-token = var.gitlab-registry-token
+  source               = "./ssm"
+  git-pull-token       = var.git-pull-token
+  gitlab-registry-user = var.gitlab-registry-user
+  gitlab-registry-pw   = var.gitlab-registry-pw
 }
 
 
