@@ -52,15 +52,7 @@ data "aws_route53_zone" "existing" {
          name    = var.alb_dns_name
          zone_id = var.alb_zone_id
        }
-     }, 
-     {
-      name           = "*"
-      type           = "CNAME"
-      alias   = {
-        name    = var.alb_dns_name
-        zone_id = var.alb_zone_id
-      }
-    }
+     } 
    ]
 
    #depends_on = [module.zones]
