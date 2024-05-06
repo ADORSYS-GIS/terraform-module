@@ -32,7 +32,7 @@ module "acm" {
   wait_for_validation = true
 
   tags = {
-    Name = "*.sol.adorsys.com",
+    Name = "sol.adorsys.com",
     cost-center = ""
   }
 }
