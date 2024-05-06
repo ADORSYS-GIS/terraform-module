@@ -38,7 +38,6 @@ locals {
     cd /docker-develop/develop/qwac-assessor && docker-compose up -d
     cd /docker-develop/develop/traefik && docker-compose up -d
     cd /docker-develop/develop/watchtower && docker-compose up -d
-
   EOT
 
   tags = {
