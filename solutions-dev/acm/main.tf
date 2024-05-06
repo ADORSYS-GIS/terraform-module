@@ -2,7 +2,7 @@ locals {
   # Use existing (via data source) 
   use_existing_route53_zone = true
 
-  domain = "*.sol.adorsys.com"
+  domain = "sol.adorsys.com"
 
   # Removing trailing dot from domain - just to be sure :)
   domain_name = trimsuffix(local.domain, ".")
@@ -20,7 +20,7 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "~> 4.0"
 
-  domain_name = local.domain_name
+  domain_name = "*.sol.adorsys.com"
   zone_id     = local.zone_id
 
   validation_method = "DNS"
