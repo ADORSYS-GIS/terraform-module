@@ -2,7 +2,7 @@ locals {
   # Use existing (via data source) 
   use_existing_route53_zone = true
 
-  domain = "sol.adorsys.com"
+  domain = "*.sol.adorsys.com"
 
   # Removing trailing dot from domain - just to be sure :)
   domain_name = trimsuffix(local.domain, ".")
@@ -26,13 +26,13 @@ module "acm" {
   validation_method = "DNS"
 
   subject_alternative_names = [
-    "*.sol.adorsys.com"
+    # "*.sol.adorsys.com"
   ]
 
   wait_for_validation = true
 
   tags = {
-    Name = "sol.adorsys.com",
+    Name = "*.sol.adorsys.com",
     cost-center = ""
   }
 }
