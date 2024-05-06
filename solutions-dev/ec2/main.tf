@@ -10,15 +10,15 @@ locals {
 
   user_data = <<-EOT
     #!/bin/bash
-    sudo snap install docker 
+    snap install docker 
 
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
+    curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
 
-    sudo curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    sudo apt install unzip -y
-    sudo unzip awscliv2.zip
-    sudo ./aws/install
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    apt install unzip -y
+    unzip awscliv2.zip
+    ./aws/install
 
     echo "export TOKEN=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
     echo "export GITLABUSER=$(aws ssm get-parameter --name "gitlab-registry-user" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
@@ -27,11 +27,14 @@ locals {
 
     git clone https://groupaccesstoken:$TOKEN@git.adorsys.de/solutions/docker-develop
     whoami
+    echo $GITLABUSER
+    echo $GITLABPW
+    tail $HOME/.bashrc 
 
-    echo "$GITLABPW" | sudo docker login gitlab-registry.adorsys.de --username "$GITLABUSER" --password-stdin
+    echo "$GITLABPW" | docker login gitlab-registry.adorsys.de --username "$GITLABUSER" --password-stdin
 
     cd /docker-develop/develop/xs2a
-    sudo docker-compose up -d
+    docker-compose up -d
   EOT
 
   tags = {
