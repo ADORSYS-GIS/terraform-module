@@ -29,7 +29,7 @@ locals {
     echo "export GITLABPW=$(aws ssm get-parameter --name "gitlab-registry-pw" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
     source $HOME/.bashrc
 
-    git clone -b develop https://groupaccesstoken:$TOKEN@git.adorsys.de/solutions/docker-develop
+    git clone -b watchtower https://groupaccesstoken:$TOKEN@git.adorsys.de/solutions/docker-develop
 
     echo "$GITLABPW" | docker login gitlab-registry.adorsys.de --username "$GITLABUSER" --password-stdin
 
@@ -37,6 +37,7 @@ locals {
     cd /docker-develop/develop/modelbank && docker-compose up -d
     cd /docker-develop/develop/qwac-assessor && docker-compose up -d
     cd /docker-develop/develop/traefik && docker-compose up -d
+    cd /docker-develop/develop/watchtower && docker-compose up -d
 
   EOT
 
