@@ -82,7 +82,7 @@ module "alb" {
         interval            = 30
         matcher             = "200"
         path                = "/ping"
-        port                = "8000"
+        port                = "8080"
         protocol            = "HTTP"
         timeout             = 5
         unhealthy_threshold = 2

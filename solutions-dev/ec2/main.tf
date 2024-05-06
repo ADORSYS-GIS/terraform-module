@@ -15,10 +15,8 @@ locals {
     add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
     apt-cache policy docker-ce
     apt-get install -y docker-ce
-
     curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
-
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     apt-get install unzip -y
     unzip awscliv2.zip
@@ -93,7 +91,7 @@ module "ec2_security_group" {
   version = "~> 4.0"
 
   name        = "sol-${local.project}"
-  description = "Security group http-80-tcp for EC2 instance"
+  description = "Security group http-80/8080-tcp for EC2 instance"
   vpc_id      = var.vpc_id
 
   ingress_with_source_security_group_id = [
@@ -101,6 +99,10 @@ module "ec2_security_group" {
       rule                     = "http-80-tcp"
       source_security_group_id = var.source_security_group_id
     },
+    {
+      rule                     = "http-8080-tcp"
+      source_security_group_id = var.source_security_group_id
+    }
   ]
   egress_rules            = ["all-all"]
 
