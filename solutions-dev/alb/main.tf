@@ -75,7 +75,19 @@ module "alb" {
       protocol    = "HTTP"
       port        = 80
       target_type = "instance"
-    
+ 
+      health_check = {
+        enabled             = true
+        healthy_threshold   = 5
+        interval            = 30
+        matcher             = "200"
+        path                = "/ping"
+        port                = "8000"
+        protocol            = "HTTP"
+        timeout             = 5
+        unhealthy_threshold = 2
+      }   
+
       protocol_version = "HTTP1"
       target_id        = var.ec2_complete_id
       port             = 80
