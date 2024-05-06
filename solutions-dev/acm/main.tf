@@ -26,9 +26,7 @@ module "acm" {
   validation_method = "DNS"
 
   subject_alternative_names = [
-     "*.sol.adorsys.com",
-     "*.*.sol.adorsys.com",
-     "*.*.*.sol.adorsys.com"
+     "*.sol.adorsys.com"
   ]
 
   wait_for_validation = true
