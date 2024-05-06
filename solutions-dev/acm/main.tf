@@ -20,13 +20,15 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "~> 4.0"
 
-  domain_name = local.domain
+  domain_name = local.domain_name
   zone_id     = local.zone_id
 
   validation_method = "DNS"
 
   subject_alternative_names = [
-     "*.sol.adorsys.com"
+     "*.sol.adorsys.com",
+     "*.*.sol.adorsys.com",
+     "*.*.*.sol.adorsys.com"
   ]
 
   wait_for_validation = true
