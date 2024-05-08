@@ -31,9 +31,9 @@ locals {
 
     echo "$GITLABPW" | docker login gitlab-registry.adorsys.de --username "$GITLABUSER" --password-stdin
 
-    cd /docker-develop/develop/xs2a && docker-compose up -d
-    cd /docker-develop/develop/modelbank && docker-compose up -d
-    cd /docker-develop/develop/qwac-assessor && docker-compose up -d
+    cd /docker-develop/develop/xs2a && docker-compose -p xs2a up -d
+    cd /docker-develop/develop/modelbank && docker-compose -p modelbank up -d
+    cd /docker-develop/develop/qwac-assessor && docker-compose -p qwac-assessor up -d
     cd /docker-develop/develop/traefik && docker-compose up -d
     cd /docker-develop/develop/watchtower && docker-compose up -d
   EOT
