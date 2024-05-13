@@ -49,6 +49,7 @@ module "alb" {
   }
 
   listeners = {
+
     http_https_redirect = {
       port     = 80
       protocol = "HTTP"
@@ -58,18 +59,44 @@ module "alb" {
         status_code = "HTTP_301"
       }
     }
+
     https = {
       port            = 443
       protocol        = "HTTPS"
       certificate_arn = var.certificate_arn
 
-      forward = {
-        target_group_key = "sol_instance"
+      rules = {
+
+        support = {
+          actions = [{
+            type = "forward"
+            target_group_key = "support_instance"
+          }]
+          conditions = [{
+            host_header = {
+              values = ["*.support.sol.adorsys.com"] 
+            }
+          }]
+        }
+
+        dev = {
+          actions = [{
+            type = "forward"
+            target_group_key = "dev_instance"
+          }]
+          conditions = [{
+            host_header = {
+              values = ["*.dev.sol.adorsys.com"] 
+            }
+          }]
+        }
+
       }
     }
   }
 
   target_groups = {
+
     dev_instance = {
       name_prefix = "sol"
       protocol    = "HTTP"
