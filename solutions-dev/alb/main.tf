@@ -64,9 +64,24 @@ module "alb" {
       port            = 443
       protocol        = "HTTPS"
       certificate_arn = var.certificate_arn
-
+      fixed_response = {
+       status_code = "501"
+       content_type = "text/plain"
+       message_body = "No Path Found"
+      }
       rules = {
 
+        support = {
+          actions = [{
+            type = "forward"
+            target_group_key = "support_instance"
+          }]
+          conditions = [{
+            host_header = {
+              values = ["*.support.sol.adorsys.com"] 
+            }
+          }]
+        }
         support = {
           actions = [{
             type = "forward"
