@@ -82,17 +82,6 @@ module "alb" {
             }
           }]
         }
-        support = {
-          actions = [{
-            type = "forward"
-            target_group_key = "support_instance"
-          }]
-          conditions = [{
-            host_header = {
-              values = ["*.support.sol.adorsys.com"] 
-            }
-          }]
-        }
 
         dev = {
           actions = [{
@@ -113,7 +102,7 @@ module "alb" {
   target_groups = {
 
     dev_instance = {
-      name_prefix = "sol"
+      name_prefix = "dev-"
       protocol    = "HTTP"
       port        = 80
       target_type = "instance"
@@ -136,7 +125,7 @@ module "alb" {
     }
 
     support_instance = {
-      name_prefix = "sol"
+      name_prefix = "support-"
       protocol    = "HTTP"
       port        = 80
       target_type = "instance"
