@@ -17,7 +17,12 @@ variable "certificate_arn" {
   type        = any
 }
 
-variable "ec2_complete_id" {
+variable "ec2_dev_id" {
+  description = "placeholder"
+  type        = any
+}
+
+variable "ec2_support_id" {
   description = "placeholder"
   type        = any
 }
