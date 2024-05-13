@@ -125,7 +125,7 @@ module "alb" {
     }
 
     support_instance = {
-      name_prefix = "support-"
+      name_prefix = "sup-"
       protocol    = "HTTP"
       port        = 80
       target_type = "instance"
