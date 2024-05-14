@@ -26,7 +26,6 @@ locals {
       echo "export GITLABPW=$(aws ssm get-parameter --name "gitlab-registry-pw" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
       source $HOME/.bashrc
   
-  
       git clone https://groupaccesstoken:$TOKEN@git.adorsys.de/solutions/docker-develop
   
       echo "$GITLABPW" | docker login gitlab-registry.adorsys.de --username "$GITLABUSER" --password-stdin
