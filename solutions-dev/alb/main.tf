@@ -101,6 +101,29 @@ module "alb" {
 
   target_groups = {
 
+    sol_instance = {
+      name_prefix = "sol-"
+      protocol    = "HTTP"
+      port        = 80
+      target_type = "instance"
+ 
+      health_check = {
+        enabled             = true
+        healthy_threshold   = 5
+        interval            = 30
+        matcher             = "200"
+        path                = "/ping"
+        port                = "8080"
+        protocol            = "HTTP"
+        timeout             = 5
+        unhealthy_threshold = 2
+      }   
+
+      protocol_version = "HTTP1"
+      target_id        = "i-12345678"
+      port             = 80
+    }
+
     dev_instance = {
       name_prefix = "dev-"
       protocol    = "HTTP"
