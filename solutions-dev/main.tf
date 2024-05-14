@@ -42,13 +42,9 @@ module "ec2_support" {
 module "alb" {
   source          = "./alb"
   vpc_id          = module.vpc.vpc_id
-  ec2_dev_id      = module.ec2-dev.ec2_dev_id
-  ec2_support_id  = module.ec2-support.ec2_support_id
+  ec2_dev_id      = module.ec2_dev.ec2_dev_id
+  ec2_support_id  = module.ec2_support.ec2_support_id
   cidr_ipv4       = module.vpc.vpc_cidr_block
   subnets         = module.vpc.public_subnets
   certificate_arn = module.acm.acm_certificate_arn
-  depends_on = [
-    module.ec2_dev, 
-    module.ec2_support
-  ]
 }
