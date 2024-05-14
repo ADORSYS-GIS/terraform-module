@@ -49,7 +49,7 @@ module "ec2_instance" {
   source = "terraform-aws-modules/ec2-instance/aws"
 
   ami                         = local.ami_id
-  name                        = "${local.project}-support-instance"
+  name                        = "${local.project}-dev-instance"
   instance_type               = local.instance_type
   monitoring                  = true
   vpc_security_group_ids      = local.vpc_security_group_ids
