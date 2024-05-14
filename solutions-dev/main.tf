@@ -22,16 +22,16 @@ module "acm" {
 
 }
 
-module "ec2-dev" {
-  source = "./ec2-dev"
+module "ec2_dev" {
+  source = "./ec2_dev"
 
   vpc_id                   = module.vpc.vpc_id
   subnet_id                = element(module.vpc.private_subnets, 0)
   source_security_group_id = module.alb.security_group_id
 
 }
-module "ec2-support" {
-  source = "./ec2-support"
+module "ec2_support" {
+  source = "./ec2_support"
 
   vpc_id                   = module.vpc.vpc_id
   subnet_id                = element(module.vpc.private_subnets, 0)
@@ -47,4 +47,8 @@ module "alb" {
   cidr_ipv4       = module.vpc.vpc_cidr_block
   subnets         = module.vpc.public_subnets
   certificate_arn = module.acm.acm_certificate_arn
+  depends_on = [
+    module.ec2_dev, 
+    module.ec2_support
+  ]
 }
