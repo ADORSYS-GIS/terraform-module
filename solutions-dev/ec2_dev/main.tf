@@ -21,7 +21,6 @@ locals {
      apt-get install unzip -y
      unzip awscliv2.zip
      ./aws/install
-
      echo "export TOKEN=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
      echo "export GITLABUSER=$(aws ssm get-parameter --name "gitlab-registry-user" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
      echo "export GITLABPW=$(aws ssm get-parameter --name "gitlab-registry-pw" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
