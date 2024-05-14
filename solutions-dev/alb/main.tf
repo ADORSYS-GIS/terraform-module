@@ -20,6 +20,7 @@ module "alb" {
   subnets = var.subnets
 
   putin_khuylo = true
+  enable_deletion_protection = false
 
   security_group_name = "alb-sg"
   # Security Group
