@@ -1,0 +1,16 @@
+{
+    "extend_es_connectivity": {
+      "policy_assignments": [],
+      "policy_definitions": [],
+      "policy_set_definitions": [],
+      "role_definitions": ["Azure-Peering-Role"],
+      "archetype_config": {
+        "parameters": {
+          "Deny-Resource-Locations": {
+            "listOfAllowedLocations": []
+          }
+        },
+        "access_control": {}
+      }
+    }
+  }

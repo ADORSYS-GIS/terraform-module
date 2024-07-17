@@ -1,0 +1,18 @@
+{
+    "galacticgekko-landingzone-prod": {
+      "policy_assignments" : [
+      ],
+      "policy_definitions" : [],
+      "policy_set_definitions" : [],
+      "role_definitions" : [],
+      "archetype_config" : {
+        "parameters" : {
+          "Deny-Resource-Locations" : {
+            "listOfAllowedLocations" : [
+            ]
+          }
+        },
+        "access_control" : {}
+      }
+    }
+  }

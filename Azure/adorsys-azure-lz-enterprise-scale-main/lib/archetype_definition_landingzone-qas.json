@@ -1,0 +1,18 @@
+{
+    "galacticgekko-landingzone-qas": {
+      "policy_assignments" : [
+        "Deny-Public-IP-On-NIC", "Deny-HybridNetworking", "Audit-PeDnsZones", "Deny-Resource-Locations"
+   ],
+   "policy_definitions" : [],
+   "policy_set_definitions" : [],
+   "role_definitions" : [],
+   "archetype_config" : {
+     "parameters" : {
+       "Deny-Resource-Locations" : {
+         "listOfAllowedLocations" : ["westeurope", "northeurope"]
+       }
+     },
+     "access_control" : {}
+   }
+ }
+}

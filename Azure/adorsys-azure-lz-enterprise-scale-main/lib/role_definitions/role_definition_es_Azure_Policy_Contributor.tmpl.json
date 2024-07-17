@@ -1,0 +1,28 @@
+{
+    "name": "167d1cdf-408d-45fb-98f6-10ebd7d89fd2",
+    "type": "Microsoft.Authorization/roleDefinitions",
+    "apiVersion": "2018-01-01-preview",
+    "properties": {
+        "roleName": "Azure-Policy-Contributor",
+        "description": "Custom role to allow managing Azure policies",
+        "type": "customRole",
+        "permissions": [
+            {
+                "actions": [
+                    "Microsoft.Authorization/policyAssignments/*",
+                    "Microsoft.Authorization/policyDefinitions/*",
+                    "Microsoft.Authorization/policySetDefinitions/*",
+                    "Microsoft.PolicyInsights/register/action/*",
+                    "Microsoft.Resources/subscriptions/resourceGroups/read",
+                    "Microsoft.Resources/subscriptions/resourceGroups/resources/read"
+                ],
+                "notActions": [],
+                "dataActions": [],
+                "notDataActions": []
+            }
+        ],
+        "assignableScopes": [
+            "${current_scope_resource_id}"
+        ]
+    }
+}

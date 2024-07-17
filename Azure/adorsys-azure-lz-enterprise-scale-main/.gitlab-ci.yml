@@ -1,0 +1,29 @@
+---
+stages:
+  - prepare
+  - linting
+  - release
+
+include:
+  - component: git.cloudpunks.io/components/linting/commitlint@v1.3.0
+    inputs:
+      stage: linting
+
+  - component: git.cloudpunks.io/components/linting/terraform@v1.3.0
+    inputs:
+      as: linting:terraform
+      stage: linting
+      directory: .
+
+release:
+  image: toolhippie/semantic-release:latest
+  stage: release
+  script:
+    - semantic-release
+  dependencies:
+    - linting:commitlint
+    - linting:terraform
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+...
