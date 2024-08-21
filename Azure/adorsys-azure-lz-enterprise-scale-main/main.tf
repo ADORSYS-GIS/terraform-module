@@ -5,7 +5,11 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = ">= 3.107.0"
+      version = ">= 3.114.0"
+      configuration_aliases = [
+        azurerm.connectivity,
+        azurerm.management,
+      ]
     }
   }
   # backend "azurerm" {
@@ -50,8 +54,8 @@ module "enterprise_scale" {
 
   providers = {
     azurerm              = azurerm
-    azurerm.connectivity = azurerm
-    azurerm.management   = azurerm
+    azurerm.connectivity = azurerm.connectivity
+    azurerm.management   = azurerm.management
   }
 
   root_parent_id                  = data.azurerm_client_config.current.tenant_id
@@ -70,7 +74,7 @@ module "enterprise_scale" {
   ##################################################
   ## connectivity deployment - cloudpunks
   ##################################################
-  deploy_connectivity_resources    = false
+  deploy_connectivity_resources    = true
   subscription_id_connectivity     = var.connectivity_subscription_id
   configure_connectivity_resources = local.configure_connectivity_resources
 
