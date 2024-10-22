@@ -23,8 +23,10 @@ locals {
       echo "export TOKEN=$(aws ssm get-parameter --name "git-pull-token" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
       echo "export GITLABUSER=$(aws ssm get-parameter --name "gitlab-registry-user" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
       echo "export GITLABPW=$(aws ssm get-parameter --name "gitlab-registry-pw" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
+      echo "export GITLABUSERSDV=$(aws ssm get-parameter --name "gitlab-registry-user-sdv" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
+      echo "export GITLABPWSDV=$(aws ssm get-parameter --name "gitlab-registry-pw-sdv" --query "Parameter.Value" --with-decryption --output text)" >> $HOME/.bashrc
       source $HOME/.bashrc
-  
+
       git clone https://groupaccesstoken:$TOKEN@git.adorsys.de/solutions/docker-develop
   
       echo "$GITLABPW" | docker login gitlab-registry.adorsys.de --username "$GITLABUSER" --password-stdin
@@ -33,6 +35,10 @@ locals {
       cd /docker-develop/support/modelbank && docker-compose -p modelbank up -d
       cd /docker-develop/support/traefik && docker-compose up -d
       cd /docker-develop/support/watchtower && docker-compose up -d
+
+      echo "$GITLABPWSDV" | docker login gitlab-registry.adorsys.de --username "$GITLABUSERSDV" --password-stdin
+      cd /docker-develop/support/sopra && docker-compose up -d
+
     EOT
     tags = {
       Terraform   = "true"
@@ -120,4 +126,3 @@ data "aws_ami" "ubuntu" {
 # aws ubuntu comes with docker and aws cli 
   owners = ["099720109477"]
 }
-
