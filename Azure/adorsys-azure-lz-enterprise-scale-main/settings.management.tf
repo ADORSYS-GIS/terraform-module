@@ -18,7 +18,7 @@ locals {
           retention_in_days          = var.log_retention_in_days
           enable_monitoring_for_vm   = true
           enable_monitoring_for_vmss = true
-          enable_sentinel            = true
+          enable_sentinel            = false
           enable_change_tracking     = true
         }
       }
